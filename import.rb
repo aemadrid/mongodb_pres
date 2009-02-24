@@ -22,21 +22,26 @@ end
 
 # Just process the csv file
 t0 = Time.now
-process_hits(max) {|row|  } # puts row.inspect
-t1 = Time.now - t0
+process_hits(max) {|hsh|  } # puts row.hsh
+t1 = Time.now
+pt = t1 - t0
 puts "Took #{t1} to process the csv file..."
 
 
-# # Add 
-# t2 = Time.now
-# process_hits(max) do |row|
-# end
-# t3 = Time.now - t2
-# puts "Took #{t3} to process the csv file..."
+# MySQL
+t2 = Time.now
+process_hits(max) do |hsh|
+  YH.insert hsh
+end
+t3 = Time.now
+mt = (t3 - t2) - pt
+puts "Took #{t3} to add MySQL records..."
 
-# 
-# # Just process the csv file
-# t0 = Time.now
-# process_hits {|row| }
-# t1 = Time.now - t0
-# puts "Took #{t1} to process the csv file..."
+# Mongo
+t4 = Time.now
+process_hits(max) do |hsh|
+  MH << hsh
+end
+t5 = Time.now
+mt = (t5 - t4) - pt
+puts "Took #{t3} to add Mongo records..."
