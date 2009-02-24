@@ -27,11 +27,12 @@ t1 = Time.now - t0
 puts "Took #{t1} to process the csv file..."
 
 
-# Add 
-t2 = Time.now
-process_hits {|row| }
-t3 = Time.now - t2
-puts "Took #{t3} to process the csv file..."
+# # Add 
+# t2 = Time.now
+# process_hits(max) do |row|
+# end
+# t3 = Time.now - t2
+# puts "Took #{t3} to process the csv file..."
 
 # 
 # # Just process the csv file
