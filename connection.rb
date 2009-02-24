@@ -4,7 +4,7 @@ require 'sequel'
 
 # Connect to Mongo
 host = ENV['MONGO_RUBY_DRIVER_HOST'] || 'localhost'
-port = ENV['MONGO_RUBY_DRIVER_PORT'].to_i || XGen::Mongo::Driver::Mongo::DEFAULT_PORT
+port = ENV['MONGO_RUBY_DRIVER_PORT'].to_i || 27017
 unam = ENV['MONGO_RUBY_DRIVER_USER'] || 'ruby-mongo-pres'
 pswd = ENV['MONGO_RUBY_DRIVER_PSWD'] || 'remongo'
 dbnm = ENV['MONGO_RUBY_DRIVER_DB']   || 'ruby-mongo-pres'
