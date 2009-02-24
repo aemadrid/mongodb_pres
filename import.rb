@@ -31,7 +31,7 @@ puts "Took #{t1} to process the csv file..."
 # MySQL
 t2 = Time.now
 process_hits(max) do |hsh|
-  YH.insert hsh
+  yh.insert hsh
 end
 t3 = Time.now
 mt = (t3 - t2) - pt
@@ -40,7 +40,7 @@ puts "Took #{t3} to add MySQL records..."
 # Mongo
 t4 = Time.now
 process_hits(max) do |hsh|
-  MH << hsh
+  mh << hsh
 end
 t5 = Time.now
 mt = (t5 - t4) - pt
