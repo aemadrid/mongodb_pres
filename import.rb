@@ -34,7 +34,7 @@ process_hits(max) do |hsh|
   yh.insert hsh
 end
 t3 = Time.now
-mt = (t3 - t2) - pt
+mt = t3 - t2
 puts "Took #{t3} to add MySQL records..."
 
 # Mongo
@@ -43,5 +43,5 @@ process_hits(max) do |hsh|
   mh << hsh
 end
 t5 = Time.now
-mt = (t5 - t4) - pt
+mt = t5 - t4
 puts "Took #{t3} to add Mongo records..."
