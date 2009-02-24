@@ -1,7 +1,7 @@
 Short Presentation on MongoDB for the Utah Ruby User Group
 ==========================================================
 
-CREATE TABLE `site_hits` (  
+CREATE TABLE `hits` (  
   `id` int(11) NOT NULL auto_increment,
   `site_id` int(11) default NULL,
   `page_id` int(11) default NULL,
