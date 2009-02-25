@@ -54,6 +54,6 @@ puts "Took #{mt} seconds to add #{res} Mongo records..."
 data[res] = { :csv => pt, :mysql => yt, :mongo => mt }
 
 puts "Saving data..."
-File.open(fnm, 'w') {|out| YAML.dump(data, out) }
+File.open('data.yml', 'w') {|out| YAML.dump(data, out) }
 
 puts "DATA\n#{data.to_yaml}"
