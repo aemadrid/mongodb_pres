@@ -30,7 +30,7 @@ t0 = Time.now
 res = process_hits(max) {|hsh|  } # puts row.hsh
 t1 = Time.now
 pt = t1 - t0
-puts "Took #{pt} seconds to process #{res} records in the csv file..."
+puts "Took %5.2f seconds to process %i records in the csv file..." % [pt, res]
 
 
 # MySQL
@@ -40,7 +40,7 @@ res = process_hits(max) do |hsh|
 end
 t3 = Time.now
 yt = t3 - t2 - pt
-puts "Took #{yt} seconds to add #{res} MySQL records..."
+puts "Took %5.2f seconds to add %i MySQL..." % [yt, res]
 
 # Mongo
 t4 = Time.now
@@ -49,7 +49,7 @@ res = process_hits(max) do |hsh|
 end
 t5 = Time.now
 mt = t5 - t4 - pt
-puts "Took #{mt} seconds to add #{res} Mongo records..."
+puts "Took %5.2f seconds to add %i MySQL..." % [mt, res]
 
 data[res] = { :csv => pt, :mysql => yt, :mongo => mt }
 
