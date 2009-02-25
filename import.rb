@@ -4,7 +4,7 @@ require 'fastercsv'
 require 'yaml'
 
 puts "Loading data..."
-data = YAML::load_file('data.yml') || Hash.new
+data = YAML::load_file('data.yml') rescue Hash.new
   
 max = ARGV[0] || 'all'
 puts "Processing #{max} records..."
