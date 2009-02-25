@@ -25,30 +25,29 @@ def process_hits(max, &block)
   return cnt
 end
 
+def timeit(rt = 0)
+  st = Time.now
+  res = yield
+  [ res, Time.now - st - rt ]
+end
+
 # Just process the csv file
-t0 = Time.now
-res = process_hits(max) {|hsh|  } # puts row.hsh
-t1 = Time.now
-pt = t1 - t0
+res, pt = timeit(0) do
+  process_hits(max) {|hsh|  } # puts row.hsh
+end
 puts "Took %5.2f seconds to process %i records in the csv file..." % [pt, res]
 
 
 # MySQL
-t2 = Time.now
-res = process_hits(max) do |hsh|
-  yh.insert hsh
+res, yt = timeit(pt) do
+  process_hits(max) {|hsh| yh.insert hsh }
 end
-t3 = Time.now
-yt = t3 - t2 - pt
 puts "Took %5.2f seconds to add %i MySQL..." % [yt, res]
 
 # Mongo
-t4 = Time.now
-res = process_hits(max) do |hsh|
-  mh << hsh
+res, mt = timeit(pt) do
+  process_hits(max) {|hsh| mh << hsh }
 end
-t5 = Time.now
-mt = t5 - t4 - pt
 puts "Took %5.2f seconds to add %i MySQL..." % [mt, res]
 
 data[res] = { :csv => pt, :mysql => yt, :mongo => mt }
