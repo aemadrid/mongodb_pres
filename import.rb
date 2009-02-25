@@ -1,7 +1,11 @@
 #!/usr/bin/env ruby
 require 'connection'
 require 'fastercsv'
+require 'yaml'
 
+puts "Loading data..."
+data = YAML::load_file('data.yml') || Hash.new
+  
 max = ARGV[0] || 'all'
 puts "Processing #{max} records..."
 
@@ -18,30 +22,38 @@ def process_hits(max, &block)
     cnt += 1
     break if !all && cnt == max
   end
+  return cnt
 end
 
 # Just process the csv file
 t0 = Time.now
-process_hits(max) {|hsh|  } # puts row.hsh
+res = process_hits(max) {|hsh|  } # puts row.hsh
 t1 = Time.now
 pt = t1 - t0
-puts "Took #{t1} to process the csv file..."
+puts "Took #{pt} seconds to process #{res} records in the csv file..."
 
 
 # MySQL
 t2 = Time.now
-process_hits(max) do |hsh|
+res = process_hits(max) do |hsh|
   yh.insert hsh
 end
 t3 = Time.now
 yt = t3 - t2 - pt
-puts "Took #{yt} to add MySQL records..."
+puts "Took #{yt} seconds to add #{res} MySQL records..."
 
 # Mongo
 t4 = Time.now
-process_hits(max) do |hsh|
+res = process_hits(max) do |hsh|
   mh << hsh
 end
 t5 = Time.now
 mt = t5 - t4 - pt
-puts "Took #{mt} to add Mongo records..."
+puts "Took #{mt} seconds to add #{res} Mongo records..."
+
+data[res] = { :csv => pt, :mysql => yt, :mongo => mt }
+
+puts "Saving data..."
+File.open(fnm, 'w') {|out| YAML.dump(data, out) }
+
+puts "DATA\n#{data.to_yaml}"
